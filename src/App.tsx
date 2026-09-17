@@ -33,7 +33,7 @@ import { ChatScreen } from './components/screens/ChatScreen';
 import { CalendarScreen } from './components/screens/CalendarScreen';
 import { ProfileScreen } from './components/screens/ProfileScreen';
 
-import { Wifi, Battery, Signal, Smartphone, Maximize2, ShieldAlert, Sparkles, Layers } from 'lucide-react';
+import { Wifi, Battery, Signal } from 'lucide-react';
 
 export default function App() {
   // Navigation State
@@ -69,11 +69,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // View frame mode: fluid responsive (wide) or compact mobile phone mockup
-  const [frameMode, setFrameMode] = useState<'mobile' | 'wide'>('wide');
-
-  // Show Quick Screen Jump Bar for effortless review of all design pages
-  const [showScreenSwitcher, setShowScreenSwitcher] = useState(false);
+  // View frame mode: mobile phone mockup
+  const [frameMode] = useState<'mobile' | 'wide'>('mobile');
 
   const unreadAlertsCount = alerts.filter((a) => a.isUnread).length;
 
@@ -220,112 +217,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#E5E9F0] text-slate-800 flex flex-col items-center justify-start p-0 sm:py-3 selection:bg-rose-500 selection:text-white">
-      {/* Top Demo Toolbar */}
-      <div className={`w-full px-4 py-2 flex items-center justify-between text-xs font-semibold text-slate-600 select-none transition-all ${
-        frameMode === 'mobile' ? 'max-w-md' : 'max-w-7xl'
-      }`}>
-        <div className="flex items-center gap-2">
-          <span className="font-extrabold text-[#FF3644] tracking-tight text-sm">Attendx.</span>
-          <span className="hidden sm:inline-block text-[10px] bg-white px-2 py-0.5 rounded-md shadow-xs border border-slate-200">
-            Shiv Ashish School
-          </span>
-          <span className="hidden md:inline-block text-[10px] text-slate-400 font-medium">
-            (PC, Tablet &amp; Mobile Responsive)
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Real-time Broadcast test */}
-          <button
-            onClick={() => setIsTeacherModalOpen(true)}
-            className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-neu-sm border border-slate-200 text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-all"
-            title="Open Teacher attendance marker to trigger live parent absence alert"
-          >
-            <ShieldAlert className="w-3.5 h-3.5 text-[#FF3644]" />
-            <span className="hidden sm:inline">Teacher Register</span>
-          </button>
-
-          {/* Screen Switcher Dropdown */}
-          <button
-            onClick={() => setShowScreenSwitcher(!showScreenSwitcher)}
-            className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-neu-sm border border-slate-200 text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-all"
-          >
-            <Layers className="w-3.5 h-3.5 text-indigo-600" />
-            <span>All Screens ({currentScreen})</span>
-          </button>
-
-          {/* Device viewport toggle */}
-          <button
-            onClick={() => setFrameMode(frameMode === 'mobile' ? 'wide' : 'mobile')}
-            className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-neu-sm border border-slate-200 text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-all"
-            title="Toggle between full responsive PC/Tablet mode and Phone preview"
-          >
-            {frameMode === 'mobile' ? (
-              <>
-                <Maximize2 className="w-3.5 h-3.5 text-slate-600" />
-                <span className="hidden sm:inline">PC / Tablet View</span>
-              </>
-            ) : (
-              <>
-                <Smartphone className="w-3.5 h-3.5 text-[#FF3644]" />
-                <span className="hidden sm:inline">Phone View</span>
-              </>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Screen Switcher Drawer */}
-      {showScreenSwitcher && (
-        <div className={`w-full px-4 mb-3 animate-fadeIn ${
-          frameMode === 'mobile' ? 'max-w-md' : 'max-w-7xl'
-        }`}>
-          <div className="bg-white p-3 rounded-2xl shadow-neu border border-slate-200 text-xs">
-            <p className="font-extrabold text-slate-700 mb-2 text-[11px] uppercase tracking-wider">
-              Quick Jump to Design Screen:
-            </p>
-            <div className="grid grid-cols-3 gap-1.5">
-              {[
-                { id: 'splash', label: 'Splash Screen' },
-                { id: 'login', label: 'Login (Parent/Teacher)' },
-                { id: 'otp', label: 'OTP Verification' },
-                { id: 'home', label: 'Dashboard Home' },
-                { id: 'attendance', label: 'Attendance (85%)' },
-                { id: 'performance', label: 'Performance Report' },
-                { id: 'class-test', label: 'Class Test Grades' },
-                { id: 'student-details', label: 'Student Details' },
-                { id: 'timetable', label: 'TimeTable Routine' },
-                { id: 'homework', label: 'Homework & Assign' },
-                { id: 'sports', label: 'Sports & Consent' },
-                { id: 'certificates', label: 'Certificates & Medals' },
-                { id: 'ptm', label: 'Parent-Teacher (PTM)' },
-                { id: 'results', label: 'Result Download' },
-                { id: 'behaviour', label: 'Student Behaviour' },
-                { id: 'teachers', label: 'Teacher Directory' },
-                { id: 'chat', label: 'Direct Chat' },
-                { id: 'calendar', label: 'School Calendar' },
-                { id: 'profile', label: 'Parent Profile' },
-              ].map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    setCurrentScreen(s.id as ScreenType);
-                    setShowScreenSwitcher(false);
-                  }}
-                  className={`px-2 py-1.5 rounded-lg text-left text-[11px] font-bold truncate transition-colors ${
-                    currentScreen === s.id
-                      ? 'bg-[#FF3644] text-white shadow-xs'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700'
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Real-time Toast Banner */}
       {toastMessage && (
         <div className="fixed top-4 z-50 max-w-sm mx-4 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center justify-between gap-3 animate-slideDown">
@@ -349,10 +240,18 @@ export default function App() {
       >
         {/* Mobile Status Bar (9:41, Signal, Wifi, Battery) shown when in mobile phone frame mode */}
         {!isAuthScreen && frameMode === 'mobile' && (
-          <div className="bg-[#FF4451] text-white px-7 pt-3 pb-1 flex items-center justify-between text-xs font-bold tracking-tight select-none">
+          <div
+            className={`px-7 pt-2.5 pb-1 flex items-center justify-between text-xs font-bold tracking-tight select-none transition-colors ${
+              currentScreen === 'home' ? 'bg-[#FF4451] text-white' : 'bg-white text-slate-800'
+            }`}
+          >
             <span>9:41</span>
             {/* Dynamic Island Pill / Speaker Notch */}
-            <div className="w-20 h-4 bg-black/25 rounded-full" />
+            <div
+              className={`w-20 h-3.5 rounded-full transition-colors ${
+                currentScreen === 'home' ? 'bg-black/25' : 'bg-slate-200'
+              }`}
+            />
             <div className="flex items-center gap-1.5">
               <Signal className="w-3.5 h-3.5 stroke-[2.5]" />
               <Wifi className="w-3.5 h-3.5 stroke-[2.5]" />

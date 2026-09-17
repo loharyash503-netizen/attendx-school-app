@@ -61,7 +61,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onOpenA11y,
   onOpenSearch,
 }) => {
-  const isHomeScreen = currentScreen === 'home' || currentScreen === 'homework';
+  const isHomeScreen = currentScreen === 'home';
 
   const [wishIndex, setWishIndex] = useState(getInitialWishIndex);
   const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
@@ -92,28 +92,34 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     results: 'Result',
     behaviour: 'Student behaviour',
     teachers: 'Teacher contact',
-    chat: 'Vidhya mam',
+    chat: 'Teacher contact',
     calendar: 'Calendar',
     profile: 'Profile',
   };
 
-  const navItems: { id: ScreenType; label: string; icon: React.ReactNode }[] = [
-    { id: 'home', label: 'Dashboard', icon: <UserCheck className="w-4 h-4" /> },
-    { id: 'attendance', label: 'Attendance', icon: <Clock className="w-4 h-4" /> },
-    { id: 'performance', label: 'Performance', icon: <TrendingUp className="w-4 h-4" /> },
-    { id: 'timetable', label: 'TimeTable', icon: <Calendar className="w-4 h-4" /> },
-    { id: 'homework', label: 'Assignment', icon: <BookOpen className="w-4 h-4" /> },
-    { id: 'results', label: 'Results', icon: <FileText className="w-4 h-4" /> },
-    { id: 'teachers', label: 'Teachers', icon: <Users className="w-4 h-4" /> },
-  ];
+  const handleBack = () => {
+    if (
+      currentScreen === 'sports' ||
+      currentScreen === 'certificates' ||
+      currentScreen === 'ptm'
+    ) {
+      onNavigate('homework');
+    } else if (currentScreen === 'class-test') {
+      onNavigate('performance');
+    } else if (currentScreen === 'chat') {
+      onNavigate('teachers');
+    } else {
+      onNavigate('home');
+    }
+  };
 
   return (
-    <header role="banner" className="w-full bg-gradient-to-b from-[#FF4451] via-[#FF3644] to-[#F22938] text-white shadow-md rounded-b-[32px] sm:rounded-b-[36px] transition-all">
-      {/* Responsive Header container */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-3 pb-5">
-        {isHomeScreen ? (
+    <header role="banner" className="w-full bg-gradient-to-b from-[#FF4451] via-[#FF3644] to-[#F22938] text-white shadow-md rounded-b-[28px] sm:rounded-b-[32px] overflow-hidden transition-all select-none">
+      {isHomeScreen ? (
+        /* Home Dashboard Header Container */
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-3 pb-5">
           <div>
-            {/* Top row with curved white logo section and Notification Bell matching the user's design */}
+            {/* Top row with curved white logo section and Notification Bell */}
             <div className="flex items-center justify-between -mx-4 -mt-3 mb-3">
               {/* Curved White Logo Area */}
               <div className="relative bg-white pt-2.5 pb-2.5 pl-4 pr-6 rounded-br-[32px] flex items-center gap-2 shadow-xs">
@@ -164,7 +170,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               </div>
             </div>
 
-            {/* Middle row: Menu Button + Search Bar pill + Perfectly Centered Chat/Send Button */}
+            {/* Middle row: Menu Button + Search Bar pill + Centered Chat/Send Button */}
             <div className="flex items-center gap-2.5 sm:gap-3 max-w-2xl">
               {/* Menu button */}
               <button
@@ -176,7 +182,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 <Menu className="w-5 h-5 stroke-[2.2]" />
               </button>
 
-              {/* Center Search Bar - Clickable & Interactive with Search Engine Modal */}
+              {/* Center Search Bar */}
               <div
                 onClick={() => onOpenSearch()}
                 className="flex-1 h-10 sm:h-11 bg-white/95 hover:bg-white rounded-full px-3.5 flex items-center gap-2.5 shadow-sm text-slate-700 cursor-pointer group transition-all ring-1 ring-black/5 hover:ring-slate-300 focus:outline-none focus:ring-0"
@@ -199,7 +205,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 />
               </div>
 
-              {/* Chat / Send button - PERFECTLY CENTERED in white circle */}
+              {/* Chat / Send button */}
               <button
                 onClick={() => onNavigate('chat')}
                 aria-label="Chat / Send Message"
@@ -223,190 +229,81 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               </h1>
             </div>
           </div>
-        ) : (
-          /* Inner screen header */
-          <div>
-            {(currentScreen === 'performance' ||
-              currentScreen === 'student-details' ||
-              currentScreen === 'behaviour' ||
-              currentScreen === 'results' ||
-              currentScreen === 'teachers' ||
-              currentScreen === 'sports' ||
-              currentScreen === 'certificates' ||
-              currentScreen === 'ptm') ? (
-              <div>
-                {/* Curved White Title Section matching reference image */}
-                <div className="flex items-center justify-between -mx-4 -mt-3 mb-3">
-                  <div className="relative bg-white pt-2.5 pb-2.5 pl-3 pr-6 rounded-br-[32px] flex items-center gap-1.5 shadow-xs">
-                    <button
-                      onClick={() => {
-                        if (
-                          currentScreen === 'sports' ||
-                          currentScreen === 'certificates' ||
-                          currentScreen === 'ptm'
-                        ) {
-                          onNavigate('homework');
-                        } else {
-                          onNavigate('home');
-                        }
-                      }}
-                      className="flex items-center gap-1 text-[#FF3644] font-bold text-sm sm:text-base active:scale-95 transition-transform"
-                      aria-label="Back"
-                    >
-                      <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
-                      <span className="font-extrabold tracking-tight">
-                        {screenTitles[currentScreen] || 'Details'}
-                      </span>
-                    </button>
-                    {/* Smooth inverted curve transitioning into red header */}
-                    <div className="absolute -right-5 top-0 w-5 h-5 overflow-hidden pointer-events-none">
-                      <svg viewBox="0 0 20 20" className="w-full h-full text-white fill-current">
-                        <path d="M 0 0 C 0 11.046 8.954 20 20 20 L 0 20 Z" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Top-Right Search, Notification Bell & 3-Dots */}
-                  <div className="flex items-center gap-1.5 pr-4 pt-1">
-                    <button
-                      onClick={() => onOpenSearch()}
-                      className="p-2 rounded-full hover:bg-white/15 transition-all text-white"
-                      aria-label="Search"
-                      title="Search Attendx (⌘K)"
-                    >
-                      <Search className="w-5 h-5 stroke-[2.2]" />
-                    </button>
-                    <button
-                      onClick={onOpenAlerts}
-                      className="p-2 rounded-full hover:bg-white/15 transition-all text-white"
-                      aria-label="Notifications"
-                    >
-                      <Bell className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => onNavigate('profile')}
-                      className="p-2 rounded-full hover:bg-white/15 transition-all text-white"
-                      aria-label="Menu"
-                    >
-                      <MoreVertical className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Student Profile Row matching reference image */}
-                <div className="flex items-center gap-3 pt-1 px-1">
-                  <div className="w-11 h-11 rounded-full border-2 border-white shadow-md ring-2 ring-white/30 overflow-hidden bg-white flex items-center justify-center shrink-0">
-                    <StudentAvatar size="sm" className="w-full h-full" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-black tracking-tight text-white leading-tight">
-                      {student.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')}
-                    </h2>
-                    <p className="text-xs text-red-100 font-medium">
-                      Class-{student.class.replace(/th$/i, '')}th {student.section}
-                    </p>
-                  </div>
-                </div>
+        </div>
+      ) : (
+        /* Inner Screen Upper Design matching user reference image exactly across all screens */
+        <div className="w-full max-w-7xl mx-auto pb-4">
+          {/* Top Navigation Row: White Tab on Left with S-Curve, Bell & 3-Dots on Right */}
+          <div className="flex items-start justify-between w-full">
+            {/* Left: White tab with `< [Screen Name]` and smooth S-curve */}
+            <div className="flex items-start flex-shrink-0">
+              <div className="bg-white h-11 sm:h-12 pl-3 sm:pl-4 pr-2.5 flex items-center shadow-xs">
+                <button
+                  onClick={handleBack}
+                  className="flex items-center gap-1 sm:gap-1.5 text-[#FF3644] hover:text-[#E02636] font-extrabold text-[15px] sm:text-base active:scale-95 transition-all"
+                  aria-label={`Back from ${screenTitles[currentScreen] || 'screen'}`}
+                >
+                  <ChevronLeft className="w-5 h-5 stroke-[2.8]" />
+                  <span className="tracking-tight">{screenTitles[currentScreen] || 'Details'}</span>
+                </button>
               </div>
-            ) : (
-              <>
-                <div className="flex items-center justify-between mb-3">
-                  <button
-                    onClick={() => onNavigate('home')}
-                    className="flex items-center gap-2 text-white/95 hover:text-white font-semibold text-base py-1 px-1 -ml-1 active:scale-95 transition-all"
-                    aria-label="Go back to Home"
-                  >
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-xs">
-                      <ChevronLeft className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="font-bold tracking-wide text-sm sm:text-base">
-                      {screenTitles[currentScreen] || 'Attendx'}
-                    </span>
-                  </button>
 
-                  <div className="flex items-center gap-1.5 sm:gap-2">
-                    <button
-                      onClick={() => onOpenSearch()}
-                      className="p-1.5 rounded-full bg-white/15 hover:bg-white/25 transition-all text-white"
-                      aria-label="Search Attendx"
-                      title="Search Attendx (⌘K)"
-                    >
-                      <Search className="w-4 h-4 stroke-[2.2]" />
-                    </button>
-                    {onOpenA11y && (
-                      <button
-                        onClick={onOpenA11y}
-                        aria-label="Accessibility Settings"
-                        className="p-1.5 rounded-full bg-white/15 hover:bg-white/25 transition-all text-white"
-                      >
-                        <Sliders className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                    <button
-                      onClick={onOpenAlerts}
-                      className="relative p-2 rounded-full bg-white/15 hover:bg-white/25 transition-all text-white"
-                      aria-label="Notifications"
-                    >
-                      <Bell className="w-4 h-4" />
-                      {unreadAlertsCount > 0 && (
-                        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-400 rounded-full" />
-                      )}
-                    </button>
-                    <button
-                      onClick={() => onNavigate('profile')}
-                      className="p-1.5 rounded-full hover:bg-white/15 transition-all text-white"
-                      aria-label="Menu Profile"
-                    >
-                      <MoreVertical className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+              {/* Smooth inverted S-curve transition from white tab to top red edge */}
+              <div className="w-12 sm:w-16 h-11 sm:h-12 flex-shrink-0 overflow-hidden pointer-events-none -ml-[1px]">
+                <svg
+                  viewBox="0 0 60 48"
+                  className="w-full h-full text-white fill-current"
+                  preserveAspectRatio="none"
+                >
+                  <path d="M 0 0 L 60 0 C 38 0 22 48 0 48 Z" />
+                </svg>
+              </div>
+            </div>
 
-                {currentScreen !== 'chat' && (
-                  <div className="flex items-center justify-between pt-1">
-                    <div className="flex items-center gap-2.5">
-                      <img
-                        src={student.avatarUrl}
-                        alt={student.name}
-                        className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
-                      />
-                      <div>
-                        <h2 className="text-base font-extrabold tracking-tight text-white leading-tight">
-                          {student.name}
-                        </h2>
-                        <p className="text-[11px] text-red-100 font-medium">
-                          Class-{student.class} {student.section} &bull; Roll: {student.rollNo}
-                        </p>
-                      </div>
-                    </div>
-
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-white border border-white/20">
-                      Shiv Ashish School
-                    </span>
-                  </div>
+            {/* Right: Notification Bell & 3-Dots in red area matching reference */}
+            <div className="flex items-center gap-1 sm:gap-2 pr-3 sm:pr-5 pt-1.5 sm:pt-2">
+              <button
+                onClick={onOpenAlerts}
+                className="p-2 rounded-full hover:bg-white/15 transition-all text-white relative active:scale-95"
+                aria-label="Notifications"
+                title="Notifications"
+              >
+                <Bell className="w-5 h-5 stroke-[2.2]" />
+                {unreadAlertsCount > 0 && (
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full ring-2 ring-[#FF3644]" />
                 )}
-              </>
-            )}
+              </button>
 
-            {currentScreen === 'chat' && (
-              <div className="flex items-center gap-2.5 pt-1">
-                <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80"
-                  alt="Vidhya Mam"
-                  className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
-                />
-                <div>
-                  <h2 className="text-sm font-bold text-white">Vidhya mam</h2>
-                  <p className="text-[10px] text-red-100">Class teacher &bull; 10th-A</p>
-                </div>
-                <span className="ml-auto text-[10px] bg-emerald-500 text-white font-bold px-2 py-0.5 rounded-full">
-                  Online
-                </span>
-              </div>
-            )}
+              <button
+                onClick={() => onNavigate('profile')}
+                className="p-2 rounded-full hover:bg-white/15 transition-all text-white active:scale-95"
+                aria-label="More options"
+                title="Settings & Profile"
+              >
+                <MoreVertical className="w-5 h-5 stroke-[2.2]" />
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* Student Profile Row: Avatar + Name + Class matching user reference image */}
+          <div className="flex items-center gap-3.5 px-4 sm:px-6 pt-2.5 pb-1">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-white shadow-sm ring-2 ring-white/40 overflow-hidden bg-white flex items-center justify-center shrink-0">
+              <StudentAvatar size="sm" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-black tracking-tight text-white leading-tight">
+                {student.name
+                  .split(' ')
+                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+                  .join(' ')}
+              </h2>
+              <p className="text-xs sm:text-[13px] text-white/90 font-semibold mt-0.5">
+                Class-{student.class.replace(/th$/i, '')}th {student.section}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
