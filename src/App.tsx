@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ScreenType, UserRole, RealtimeAlert, Teacher } from './types';
-import { initialStudent, initialAlerts } from './data/mockData';
+import { initialStudent, parentChildrenList, initialAlerts } from './data/mockData';
 import { TopHeader } from './components/TopHeader';
 import { BottomNavBar } from './components/BottomNavBar';
 import { NotificationModal } from './components/NotificationModal';
@@ -162,6 +162,7 @@ export default function App() {
               setToastMessage('✅ Ajay Verma verified PRESENT today.');
               setTimeout(() => setToastMessage(null), 3000);
             }}
+            onNavigate={(screen) => setCurrentScreen(screen)}
           />
         );
       case 'performance':
@@ -198,6 +199,14 @@ export default function App() {
         return (
           <ProfileScreen
             student={student}
+            childrenList={parentChildrenList}
+            onSelectStudent={(newStudent) => {
+              setStudent(newStudent);
+              setToastMessage(
+                `Switched active view to ${newStudent.name} (Class-${newStudent.class} ${newStudent.section})`
+              );
+              setTimeout(() => setToastMessage(null), 3500);
+            }}
             onLogout={() => setCurrentScreen('login')}
           />
         );
@@ -240,18 +249,10 @@ export default function App() {
       >
         {/* Mobile Status Bar (9:41, Signal, Wifi, Battery) shown when in mobile phone frame mode */}
         {!isAuthScreen && frameMode === 'mobile' && (
-          <div
-            className={`px-7 pt-2.5 pb-1 flex items-center justify-between text-xs font-bold tracking-tight select-none transition-colors ${
-              currentScreen === 'home' ? 'bg-[#FF4451] text-white' : 'bg-white text-slate-800'
-            }`}
-          >
+          <div className="px-7 pt-2.5 pb-1 flex items-center justify-between text-xs font-bold tracking-tight select-none transition-colors bg-white text-slate-800">
             <span>9:41</span>
             {/* Dynamic Island Pill / Speaker Notch */}
-            <div
-              className={`w-20 h-3.5 rounded-full transition-colors ${
-                currentScreen === 'home' ? 'bg-black/25' : 'bg-slate-200'
-              }`}
-            />
+            <div className="w-20 h-3.5 rounded-full bg-slate-200" />
             <div className="flex items-center gap-1.5">
               <Signal className="w-3.5 h-3.5 stroke-[2.5]" />
               <Wifi className="w-3.5 h-3.5 stroke-[2.5]" />

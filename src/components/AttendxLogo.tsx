@@ -65,22 +65,21 @@ export const AttendxLogo: React.FC<LogoProps> = ({
       </svg>
 
       {showText && (
-        <div className="flex items-baseline font-serif">
+        <div className="flex items-baseline tracking-tight select-none">
           <span
-            className={`font-black font-serif tracking-tight ${
-              lightText ? 'text-white' : 'text-[#1E2024]'
+            className={`font-black tracking-wider ${
+              lightText ? 'text-white' : 'text-[#E1432A]'
             } ${textSize}`}
-            style={{ fontFamily: 'Georgia, "Times New Roman", serif', letterSpacing: '-0.02em' }}
+            style={{ letterSpacing: '0.02em' }}
           >
             ATTEND
           </span>
           <span
-            className={`font-serif italic font-bold ml-0.5 ${
-              lightText ? 'text-red-200' : 'text-[#1E2024]'
+            className={`font-black ml-0.5 ${
+              lightText ? 'text-red-200' : 'text-[#26282E]'
             } ${textSize}`}
-            style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
           >
-            x
+            X
           </span>
         </div>
       )}

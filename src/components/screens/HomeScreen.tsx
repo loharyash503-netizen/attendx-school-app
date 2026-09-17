@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, TrendingUp, Download, Phone } from 'lucide-react';
+import { User, TrendingUp, Briefcase, Phone } from 'lucide-react';
 import { ScreenType, StudentInfo } from '../../types';
 
 interface HomeScreenProps {
@@ -9,7 +9,7 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
-  // 5 subjects matching the reference image
+  // 5 subjects matching Image 1: iPhone 14 & 15 Pro - 13.png
   const chartSubjects = [
     { code: 'ENG', score: 84, color: '#4ADE80' },
     { code: 'GUJ', score: 68, color: '#4ADE80' },
@@ -23,7 +23,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
 
   return (
     <div className="space-y-4 pb-28 px-4 sm:px-6 pt-3 sm:pt-4 w-full max-w-md sm:max-w-xl md:max-w-2xl mx-auto select-none">
-      {/* Section 1: Performance Report Scorecard Dashboard */}
+      {/* Section 1: Performance Report Scorecard */}
       <div>
         <div className="mb-2 px-1">
           <h2 className="text-xs sm:text-sm font-extrabold text-slate-500 tracking-tight">
@@ -31,7 +31,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
           </h2>
         </div>
 
-        {/* Neomorphic White Card with Left Graph & Right Grade Details */}
+        {/* Neumorphic White Card matching Image 1 */}
         <div className="bg-white rounded-[26px] sm:rounded-[30px] p-3.5 sm:p-4 shadow-neu border border-white/90">
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Left Inset Bar Chart Container */}
@@ -173,7 +173,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Section 2: 4 Big Claymorphic Action Cards (2x2 Grid) with Feather Icons */}
+      {/* Section 2: 4 Action Cards (2x2 Grid) with Feather Icons */}
       <div className="grid grid-cols-2 gap-3.5 sm:gap-4.5 w-full pt-1">
         {/* Card 1: Student Details */}
         <button
@@ -190,7 +190,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
 
         {/* Card 2: Progress */}
         <button
-          onClick={() => onNavigate('behaviour')}
+          onClick={() => onNavigate('performance')}
           className="bg-white rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-neu border border-white/90 flex flex-col items-center justify-center gap-3 sm:gap-4 text-center aspect-square transition-all hover:scale-[1.02] active:scale-95 group focus:outline-none"
         >
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-[#FF3644] group-hover:scale-110 transition-transform">
@@ -201,20 +201,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
           </span>
         </button>
 
-        {/* Card 3: Download */}
+        {/* Card 3: Homework */}
         <button
-          onClick={() => onNavigate('results')}
+          onClick={() => onNavigate('homework')}
           className="bg-white rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-neu border border-white/90 flex flex-col items-center justify-center gap-3 sm:gap-4 text-center aspect-square transition-all hover:scale-[1.02] active:scale-95 group focus:outline-none"
         >
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-[#FF3644] group-hover:scale-110 transition-transform">
-            <Download className="w-12 h-12 sm:w-14 sm:h-14 stroke-[2.2]" />
+            <Briefcase className="w-12 h-12 sm:w-14 sm:h-14 stroke-[2.2]" />
           </div>
           <span className="font-extrabold text-xs sm:text-sm text-slate-600">
-            Download
+            Homework
           </span>
         </button>
 
-        {/* Card 4: Contact */}
+        {/* Card 4: Teacher Contact */}
         <button
           onClick={() => onNavigate('teachers')}
           className="bg-white rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 shadow-neu border border-white/90 flex flex-col items-center justify-center gap-3 sm:gap-4 text-center aspect-square transition-all hover:scale-[1.02] active:scale-95 group focus:outline-none"

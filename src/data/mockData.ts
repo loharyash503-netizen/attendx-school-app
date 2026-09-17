@@ -31,6 +31,27 @@ export const initialStudent: StudentInfo = {
   parentAvatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
 };
 
+export const secondStudent: StudentInfo = {
+  name: 'PRIYA VERMA',
+  age: 13,
+  class: '7th',
+  section: 'B',
+  rollNo: 14,
+  dob: '15/08/2011',
+  gender: 'FEMALE',
+  schoolName: 'SHIV ASHISH SCHOOL',
+  admissionNo: 'SAS-2024-2190',
+  academicYear: '2025-2026',
+  parentName: 'Ashok.K. Verma',
+  parentContact: '+91 9565652302',
+  parentEmail: 'Ashok.verma@email.com',
+  parentAddress: '123, Green valley, ahmedabad',
+  avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
+  parentAvatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+};
+
+export const parentChildrenList: StudentInfo[] = [initialStudent, secondStudent];
+
 export const initialSubjectScores: SubjectScore[] = [
   { code: 'ENG', name: 'ENGLISH', score: 84, total: 100, color: '#10B981', status: 'PASS' },
   { code: 'GUJ', name: 'GUJARATI', score: 68, total: 100, color: '#EF4444', status: 'PASS' },
