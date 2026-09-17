@@ -252,7 +252,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         <div className="bg-white p-3.5 sm:p-5 border-b border-slate-200/80 shadow-xs">
           <div className="flex items-center gap-2.5">
             {/* Input Container */}
-            <div className="flex-1 relative flex items-center bg-[#F1F5F9] rounded-2xl px-3.5 py-2.5 border border-slate-200/80 shadow-inner focus-within:ring-2 focus-within:ring-[#FF3644]/30 focus-within:border-[#FF3644] transition-all">
+            <div className="flex-1 relative flex items-center bg-[#F1F5F9] rounded-2xl px-3.5 py-2.5 border border-slate-200/80 shadow-inner focus-within:border-slate-300 transition-all">
               <Search className="w-5 h-5 text-[#FF3644] stroke-[2.5] shrink-0 mr-2" />
               <input
                 ref={inputRef}
@@ -263,7 +263,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   setSelectedIndex(0);
                 }}
                 placeholder="Search subjects, homework, teachers, timetable, sports..."
-                className="w-full bg-transparent text-sm sm:text-base font-bold text-slate-800 focus:outline-none placeholder:text-slate-400 placeholder:font-medium"
+                className="w-full bg-transparent text-sm sm:text-base font-bold text-slate-800 focus:outline-none focus:ring-0 focus:border-none border-none placeholder:text-slate-400 placeholder:font-medium"
               />
               {query && (
                 <button

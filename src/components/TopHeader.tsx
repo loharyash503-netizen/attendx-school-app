@@ -147,7 +147,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               {/* Center Search Bar - Clickable & Interactive with Search Engine Modal */}
               <div
                 onClick={() => onOpenSearch()}
-                className="flex-1 h-10 sm:h-11 bg-white/95 hover:bg-white rounded-full px-3.5 flex items-center gap-2 shadow-sm text-slate-700 cursor-pointer group transition-all ring-1 ring-black/5 hover:ring-[#FF3644]/40"
+                className="flex-1 h-10 sm:h-11 bg-white/95 hover:bg-white rounded-full px-3.5 flex items-center gap-2 shadow-sm text-slate-700 cursor-pointer group transition-all ring-1 ring-black/5 hover:ring-slate-300 focus:outline-none focus:ring-0"
                 role="search"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -163,7 +163,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                   placeholder="Search subjects, homework, teachers..."
                   readOnly
                   onClick={() => onOpenSearch()}
-                  className="w-full bg-transparent text-xs sm:text-sm focus:outline-none placeholder:text-slate-400 font-semibold text-slate-700 cursor-pointer"
+                  className="w-full bg-transparent text-xs sm:text-sm focus:outline-none focus:ring-0 border-none placeholder:text-slate-400 font-semibold text-slate-700 cursor-pointer"
                 />
                 <div className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] font-black text-slate-400 shrink-0 pointer-events-none">
                   <span>⌘</span>
