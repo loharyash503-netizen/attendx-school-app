@@ -13,15 +13,18 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentScreen, onNav
     return null;
   }
 
-  // Main tabs: Assignment, Attendance, Profile
-  // Clicking any button from the Home screen (Student Details, Progress, Download, Contact, Performance Report)
-  // is part of the Home screen flow, so the other bottom nav tabs must NOT be highlighted red.
-  const isAssignmentActive = currentScreen === 'homework';
-  const isAttendanceActive = currentScreen === 'attendance';
+  // Active state mapping:
+  // Homework tab encompasses Homework screen and its sub-screens (Sports, Certificates, PTM)
+  const isHomeworkActive =
+    currentScreen === 'homework' ||
+    currentScreen === 'sports' ||
+    currentScreen === 'certificates' ||
+    currentScreen === 'ptm';
+  const isAttendanceActive = currentScreen === 'attendance' || currentScreen === 'class-test';
   const isProfileActive = currentScreen === 'profile';
-  const isHomeActive = !isAssignmentActive && !isAttendanceActive && !isProfileActive;
+  const isHomeActive = !isHomeworkActive && !isAttendanceActive && !isProfileActive;
 
-  // 4 items with Home placed FIRST as requested, with Feather icons and visible names
+  // 4 items with Home first and Homework in exchange of Assignment
   const navItems = [
     {
       id: 'home',
@@ -31,11 +34,11 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentScreen, onNav
       label: 'Home',
     },
     {
-      id: 'assignment',
+      id: 'homework',
       screen: 'homework' as ScreenType,
       icon: FileText,
-      isActive: isAssignmentActive,
-      label: 'Assignment',
+      isActive: isHomeworkActive,
+      label: 'Homework',
     },
     {
       id: 'attendance',

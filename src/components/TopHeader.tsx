@@ -61,7 +61,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onOpenA11y,
   onOpenSearch,
 }) => {
-  const isHomeScreen = currentScreen === 'home';
+  const isHomeScreen = currentScreen === 'home' || currentScreen === 'homework';
 
   const [wishIndex, setWishIndex] = useState(getInitialWishIndex);
   const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
@@ -85,10 +85,10 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     'class-test': 'Class test',
     'student-details': 'Student Details',
     timetable: 'TimeTable',
-    homework: 'Assignment',
+    homework: 'Homework',
     sports: 'Sports',
     certificates: 'Certificates',
-    ptm: 'P-T-M',
+    ptm: 'P.T.M',
     results: 'Result',
     behaviour: 'Student behaviour',
     teachers: 'Teacher contact',
@@ -230,19 +230,32 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               currentScreen === 'student-details' ||
               currentScreen === 'behaviour' ||
               currentScreen === 'results' ||
-              currentScreen === 'teachers') ? (
+              currentScreen === 'teachers' ||
+              currentScreen === 'sports' ||
+              currentScreen === 'certificates' ||
+              currentScreen === 'ptm') ? (
               <div>
                 {/* Curved White Title Section matching reference image */}
                 <div className="flex items-center justify-between -mx-4 -mt-3 mb-3">
                   <div className="relative bg-white pt-2.5 pb-2.5 pl-3 pr-6 rounded-br-[32px] flex items-center gap-1.5 shadow-xs">
                     <button
-                      onClick={() => onNavigate('home')}
+                      onClick={() => {
+                        if (
+                          currentScreen === 'sports' ||
+                          currentScreen === 'certificates' ||
+                          currentScreen === 'ptm'
+                        ) {
+                          onNavigate('homework');
+                        } else {
+                          onNavigate('home');
+                        }
+                      }}
                       className="flex items-center gap-1 text-[#FF3644] font-bold text-sm sm:text-base active:scale-95 transition-transform"
-                      aria-label="Back to Home"
+                      aria-label="Back"
                     >
                       <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
                       <span className="font-extrabold tracking-tight">
-                        {screenTitles[currentScreen] || 'Student Details'}
+                        {screenTitles[currentScreen] || 'Details'}
                       </span>
                     </button>
                     {/* Smooth inverted curve transitioning into red header */}

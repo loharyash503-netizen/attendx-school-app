@@ -180,11 +180,11 @@ export const initialSportsEvents: SportsEvent[] = [
 ];
 
 export const sportsRanks: SportsRank[] = [
-  { rank: 1, name: 'DEV PARMAR', grade: 'Grade 10B', event: 'Chess', score: 8.2 },
-  { rank: 2, name: 'KARAN AUJHLA', grade: 'Grade 9B', event: 'Football', score: 5.0 },
-  { rank: 3, name: 'VIPUL JOSHI', grade: 'Grade 9A', event: 'Cricket', score: 6.2 },
-  { rank: 4, name: 'Ankit verma', grade: '10B', event: 'Chess', score: 7.0 },
-  { rank: 5, name: 'Vivek solanki', grade: '10A', event: 'Football', score: 8.2 },
+  { rank: 1, name: 'Dev Parmar', grade: 'Grade 10B', event: 'Chess', score: 8.5 },
+  { rank: 2, name: 'Karan Aujhla', grade: 'Grade 9B', event: 'Football', score: 7.8 },
+  { rank: 3, name: 'Vipul Joshi', grade: 'Grade 9A', event: 'Cricket', score: 7.4 },
+  { rank: 4, name: 'Ankit Verma', grade: 'Grade 10B', event: 'Badminton', score: 7.0 },
+  { rank: 5, name: 'Vivek Solanki', grade: 'Grade 10A', event: 'Athletics', score: 6.8 },
 ];
 
 export const medalsList: CertificateItem[] = [

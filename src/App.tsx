@@ -176,7 +176,7 @@ export default function App() {
       case 'timetable':
         return <TimeTableScreen />;
       case 'homework':
-        return <HomeworkScreen />;
+        return <HomeworkScreen onNavigate={(screen) => setCurrentScreen(screen)} />;
       case 'sports':
         return <SportsScreen />;
       case 'certificates':
