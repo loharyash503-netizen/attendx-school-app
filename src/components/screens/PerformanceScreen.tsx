@@ -514,7 +514,7 @@ export const PerformanceScreen: React.FC = () => {
             </div>
 
             {/* Quick Summary Badges */}
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <div className="p-2.5 bg-[#FAFAFA] rounded-xl border border-slate-200/70 text-center shadow-inner">
                 <span className="text-[9px] font-bold text-slate-400 uppercase">Avg Score</span>
                 <p className="text-sm font-black text-slate-800">24.1 / 30</p>
@@ -522,12 +522,6 @@ export const PerformanceScreen: React.FC = () => {
               <div className="p-2.5 bg-[#FAFAFA] rounded-xl border border-slate-200/70 text-center shadow-inner">
                 <span className="text-[9px] font-bold text-slate-400 uppercase">Class Rank</span>
                 <p className="text-sm font-black text-emerald-600">4th of 48</p>
-              </div>
-              <div className="p-2.5 bg-[#FAFAFA] rounded-xl border border-slate-200/70 text-center shadow-inner">
-                <span className="text-[9px] font-bold text-slate-400 uppercase">Trend</span>
-                <p className="text-sm font-black text-[#FF3644] flex items-center justify-center gap-0.5">
-                  <TrendingUp className="w-3.5 h-3.5" /> +18%
-                </p>
               </div>
             </div>
 

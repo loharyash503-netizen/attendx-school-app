@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Bell,
   MoreVertical,
@@ -19,6 +19,22 @@ import {
 import { ScreenType, StudentInfo, UserRole } from '../types';
 import { AttendxLogo } from './AttendxLogo';
 import { StudentAvatar } from './StudentAvatar';
+
+const WISHING_WORDS = [
+  'Hello! Good morning',
+  'Hello! Good afternoon',
+  'Hello! Good evening',
+  'Hello! Welcome back',
+  'Hello! Have a great day',
+];
+
+const getInitialWishIndex = () => {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return 0; // Morning
+  if (hour >= 12 && hour < 17) return 1; // Afternoon
+  if (hour >= 17 && hour < 22) return 2; // Evening
+  return 0;
+};
 
 interface TopHeaderProps {
   currentScreen: ScreenType;
@@ -46,6 +62,22 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onOpenSearch,
 }) => {
   const isHomeScreen = currentScreen === 'home';
+
+  const [wishIndex, setWishIndex] = useState(getInitialWishIndex);
+  const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
+
+  useEffect(() => {
+    if (!isHomeScreen) return;
+    const interval = setInterval(() => {
+      setFadeState('out');
+      setTimeout(() => {
+        setWishIndex((prev) => (prev + 1) % WISHING_WORDS.length);
+        setFadeState('in');
+      }, 350);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isHomeScreen]);
 
   const screenTitles: Partial<Record<ScreenType, string>> = {
     attendance: 'Attendance',
@@ -122,9 +154,9 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 <button
                   onClick={onOpenAlerts}
                   aria-label="View notifications"
-                  className="relative p-1.5 text-white hover:opacity-85 transition-opacity active:scale-95"
+                  className="relative p-1.5 text-white hover:opacity-90 transition-opacity active:scale-95"
                 >
-                  <Bell className="w-5 h-5 stroke-[2]" />
+                  <Bell className="w-6 h-6 stroke-[2.2] text-white" />
                   {unreadAlertsCount > 0 && (
                     <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-white rounded-full ring-2 ring-[#FF3644]" />
                   )}
@@ -147,7 +179,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               {/* Center Search Bar - Clickable & Interactive with Search Engine Modal */}
               <div
                 onClick={() => onOpenSearch()}
-                className="flex-1 h-10 sm:h-11 bg-white/95 hover:bg-white rounded-full px-3.5 flex items-center gap-2 shadow-sm text-slate-700 cursor-pointer group transition-all ring-1 ring-black/5 hover:ring-slate-300 focus:outline-none focus:ring-0"
+                className="flex-1 h-10 sm:h-11 bg-white/95 hover:bg-white rounded-full px-3.5 flex items-center gap-2.5 shadow-sm text-slate-700 cursor-pointer group transition-all ring-1 ring-black/5 hover:ring-slate-300 focus:outline-none focus:ring-0"
                 role="search"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -157,18 +189,14 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                   }
                 }}
               >
-                <Search className="w-3.5 h-3.5 text-[#FF3644] stroke-[2.5] flex-shrink-0 group-hover:scale-110 transition-transform" />
+                <Search className="w-4 h-4 text-[#FF3644] stroke-[2.5] flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <input
                   type="text"
-                  placeholder="Search subjects, homework, teachers..."
+                  placeholder="Search"
                   readOnly
                   onClick={() => onOpenSearch()}
                   className="w-full bg-transparent text-xs sm:text-sm focus:outline-none focus:ring-0 border-none placeholder:text-slate-400 font-semibold text-slate-700 cursor-pointer"
                 />
-                <div className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] font-black text-slate-400 shrink-0 pointer-events-none">
-                  <span>⌘</span>
-                  <span>K</span>
-                </div>
               </div>
 
               {/* Chat / Send button - PERFECTLY CENTERED in white circle */}
@@ -182,10 +210,16 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               </button>
             </div>
 
-            {/* Hello! Good morning greeting matching design */}
-            <div className="mt-3.5 sm:mt-4">
-              <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                Hello! Good morning
+            {/* Automatic changing wishing words */}
+            <div className="mt-3.5 sm:mt-4 min-h-[32px] flex items-center">
+              <h1
+                className={`text-xl sm:text-2xl font-black text-white tracking-tight transition-all duration-350 transform ${
+                  fadeState === 'out'
+                    ? 'opacity-0 -translate-y-2'
+                    : 'opacity-100 translate-y-0'
+                }`}
+              >
+                {WISHING_WORDS[wishIndex]}
               </h1>
             </div>
           </div>
@@ -194,7 +228,9 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           <div>
             {(currentScreen === 'performance' ||
               currentScreen === 'student-details' ||
-              currentScreen === 'behaviour') ? (
+              currentScreen === 'behaviour' ||
+              currentScreen === 'results' ||
+              currentScreen === 'teachers') ? (
               <div>
                 {/* Curved White Title Section matching reference image */}
                 <div className="flex items-center justify-between -mx-4 -mt-3 mb-3">
